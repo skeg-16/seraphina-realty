@@ -875,7 +875,15 @@ body.dark-mode .contact-btn:hover { color: #050505; }
 
 @media (max-width: 768px) {
     .op-search-top { flex-direction: column; }
-    .op-select { border-right: none; border-bottom: 1px solid var(--border-color); }
+    .op-select { border-right: none; border-bottom: 1px solid var(--border-color); width: 100%; text-align: center; padding-left: 0; padding-right: 0;}
+    .op-search-bottom { flex-direction: column; height: auto; }
+    .op-search-bottom i { display: none; }
+    .op-search-bottom input { width: 100%; padding: 18px 20px; border-bottom: 1px solid var(--border-color); text-align: center; }
+    .btn-search { width: 100%; padding: 18px; border-radius: 0 0 8px 8px; }
+    
+    .hero-content h1 { font-size: 2.3rem; }
+    .logo { gap: 8px; font-size: 1rem; }
+    .logo-img-custom { height: 35px; }
     .nav-links { display: none; }
     .footer-grid { grid-template-columns: 1fr; }
 }
