@@ -18,6 +18,27 @@ themeToggleBtn.addEventListener('click', () => {
     }
 });
 
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+const scrollLinks = document.querySelectorAll('.scroll-link');
+
+mobileMenuBtn.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const menuIcon = mobileMenuBtn.querySelector('i');
+    if(navLinks.classList.contains('active')) {
+        menuIcon.classList.replace('bx-menu', 'bx-x');
+    } else {
+        menuIcon.classList.replace('bx-x', 'bx-menu');
+    }
+});
+
+scrollLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        mobileMenuBtn.querySelector('i').classList.replace('bx-x', 'bx-menu');
+    });
+});
+
 const realEstateImages = [
     'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
@@ -30,7 +51,7 @@ const realEstateImages = [
     'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80',
-    'https://images.unsplash.com/photo-1502672260266-1c1de2d9d0d9?auto=format&fit=crop&w=800&q=80',
+    'https://images.unsplash.com/photo-1502672260266-1cde2d9d0d9?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80',
@@ -293,10 +314,10 @@ document.addEventListener('click', (e) => {
     }
 });
 
-function openInfoModal(title, imgUrl, headline, bodyHtml) {
+function openInfoModal(title, imgUrl, headline, bodyHtml, bgPos = 'center') {
     let heroHtml = '';
     if (imgUrl) {
-        heroHtml = `<div class='info-hero active' style='background-image: url(${imgUrl});'></div>`;
+        heroHtml = `<div class='info-hero active' style='background-image: url(${imgUrl}); background-position: ${bgPos};'></div>`;
     }
 
     infoContentBody.innerHTML = `
@@ -325,7 +346,8 @@ if (angelBioBtn) {
             <p class='justified-text'>With dedication, integrity, and a strong commitment to excellence, I established Seraphina Heights Realty to provide reliable and professional real estate services that prioritize customer satisfaction and long-term value. I strive to lead the company with innovation and purpose, ensuring that every property we offer reflects comfort, sophistication, and modern living.</p>
             <p class='justified-text'>My experience in real estate has allowed me to understand the different needs of homeowners, investors, and business clients. Through this, I continue to guide Seraphina Heights Realty in delivering exceptional service, strategic property solutions, and communities designed to inspire growth and peaceful living.</p>
             <p class='justified-text'>At Seraphina Heights Realty, my mission is to help people find not only beautiful properties but also opportunities that will secure their future and improve their quality of life. I believe that with trust, dedication, and visionary leadership, we can create developments that leave a lasting impact for generations to come.</p>
-            `
+            `,
+            'top center'
         );
     });
 }
@@ -337,7 +359,8 @@ if (marcusBioBtn) {
             'Executive Team', 
             null, 
             'Marcus Reyes', 
-            `<p class='justified-text'>Marcus Reyes brings over 15 years of elite property planning experience to Seraphina Heights. Known for his sharp market insights and unparalleled negotiation skills, Marcus ensures that every client secures the best possible value for their investments. He specializes in high-end commercial estates and sprawling residential lots.</p>`
+            `<p class='justified-text'>Marcus Reyes brings over 15 years of elite property planning experience to Seraphina Heights. Known for his sharp market insights and unparalleled negotiation skills, Marcus ensures that every client secures the best possible value for their investments. He specializes in high-end commercial estates and sprawling residential lots.</p>`,
+            'top center'
         );
     });
 }
@@ -349,7 +372,8 @@ if (elenaBioBtn) {
             'Executive Team', 
             null, 
             'Elena Cruz', 
-            `<p class='justified-text'>As our premier Luxury Condo Specialist, Elena Cruz is the bridge between modern professionals and their dream city-center lifestyles. Her impeccable taste in modern architecture and deep understanding of metropolitan real estate makes her the perfect guide for navigating high-rise investments.</p>`
+            `<p class='justified-text'>As our premier Luxury Condo Specialist, Elena Cruz is the bridge between modern professionals and their dream city-center lifestyles. Her impeccable taste in modern architecture and deep understanding of metropolitan real estate makes her the perfect guide for navigating high-rise investments.</p>`,
+            'top center'
         );
     });
 }
