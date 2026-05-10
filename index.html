@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Seraphina Heights Realty</title>
+    <link rel='icon' type='image/jpeg' href='SHR.jpg'>
+    <link rel='stylesheet' href='styles.css'>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class='creative-bg'></div>
+    <nav class='navbar'>
+        <a href='#' class='logo'>
+            <img src='SHR.jpg' class='logo-img-custom' alt='Seraphina Heights'>
+            <span id='siteName'>Seraphina Heights Realty</span>
+        </a>
+        <div class='nav-links'>
+            <a href='#hero' class='scroll-link'>Buy</a>
+            <a href='#about' class='scroll-link'>About</a>
+            <a href='#locations' class='scroll-link'>Explore</a>
+            <a href='#properties' class='scroll-link'>Projects</a>
+            <button class='btn-outline trigger-modal' data-target='contactModal'>Post a Property</button>
+            <button id='themeToggle' class='theme-btn'><i class='bx bx-moon'></i></button>
+        </div>
+    </nav>
+
+    <header id='hero' class='hero'>
+        <div class='hero-content'>
+            <h1>Building Dreams, Inspiring Futures.</h1>
+            
+            <div class='op-search-box'>
+                <div class='op-search-top'>
+                    <select class='op-select' id='statusFilter'>
+                        <option value='all'>For Sale or For Rent</option>
+                        <option value='sale'>For Sale</option>
+                        <option value='rent'>For Rent</option>
+                    </select>
+                    <select class='op-select' id='typeFilter'>
+                        <option value='all'>All Property Types</option>
+                        <option value='lot'>Lot Only</option>
+                        <option value='house'>House & Lot</option>
+                        <option value='condo'>Condominium</option>
+                    </select>
+                    <select class='op-select' id='locFilter'>
+                        <option value='all'>City / Province</option>
+                        <option value='laguna'>Laguna</option>
+                        <option value='cavite'>Cavite</option>
+                        <option value='batangas'>Batangas</option>
+                        <option value='makati'>Makati</option>
+                        <option value='bgc'>BGC</option>
+                        <option value='cebu'>Cebu</option>
+                        <option value='davao'>Davao</option>
+                    </select>
+                </div>
+                <div class='op-search-bottom'>
+                    <i class='bx bx-search'></i>
+                    <input type='text' id='searchInput' placeholder='Search by project, subdivision, condo, or any keyword'>
+                    <button class='btn-search' id='searchBtn'>Search</button>
+                </div>
+            </div>
+
+            <div class='quick-tags'>
+                <span class='tag quick-tag' data-val='house'>House and Lot For Sale</span>
+                <span class='tag quick-tag' data-val='condo'>Condo For Sale</span>
+                <span class='tag quick-tag' data-val='lot'>Commercial Spaces</span>
+                <span class='tag quick-tag' data-val='all'>View All</span>
+            </div>
+        </div>
+    </header>
+
+    <section id='about' class='about-section container'>
+        <div class='section-heading'>
+            <h2>The Seraphina Standard</h2>
+            <p>Elevated living and heavenly-inspired homes for generations to come.</p>
+        </div>
+        <div class='about-grid-new'>
+            <div class='about-card-elegant'>
+                <i class='bx bx-crown'></i>
+                <h3>Divine Elegance</h3>
+                <p class='justified-text'>Inspired by the timeless beauty of the Seraphim, the highest order of angels known for their light, purity, and excellence. The name 'Seraphina' symbolizes grace, serenity, and elevated living. We represent luxurious yet peaceful communities perfectly designed for modern families, professionals, and visionary investors.</p>
+            </div>
+            <div class='about-card-elegant'>
+                <i class='bx bx-buildings'></i>
+                <h3>Harmonious Lifestyle</h3>
+                <p class='justified-text'>We are dedicated to developing high-quality residential and commercial properties that combine sophistication, comfort, security, and long-term value. Every project is meticulously planned to create spaces that seamlessly integrate convenience, pristine nature, and state-of-the-art modern architecture.</p>
+            </div>
+            <div class='about-card-elegant'>
+                <i class='bx bx-diamond'></i>
+                <h3>Lasting Value</h3>
+                <p class='justified-text'>Our core focus remains on providing exceptional living experiences through elegant property designs, strategic locations, and highly sustainable developments. More than just building physical structures, Seraphina Heights Realty creates vibrant communities where dreams grow, relationships flourish, and futures are secured.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class='features-section container'>
+        <div class='section-heading'>
+            <h2>Why Choose Us?</h2>
+            <p>We provide a seamless and secure real estate experience.</p>
+        </div>
+        <div class='features-grid'>
+            <div class='feature-box'>
+                <i class='bx bx-check-shield'></i>
+                <h3>Verified Listings</h3>
+                <p>Every property on our platform goes through a strict verification process to ensure zero scams and complete transparency.</p>
+            </div>
+            <div class='feature-box'>
+                <i class='bx bx-support'></i>
+                <h3>Expert Assistance</h3>
+                <p>Our dedicated team of certified brokers is available 24/7 to guide you through site viewings, paperwork, and turn-over.</p>
+            </div>
+            <div class='feature-box'>
+                <i class='bx bx-trending-up'></i>
+                <h3>Market Insights</h3>
+                <p>Get access to real-time property valuation and market trends to ensure you are making the best investment decision.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id='split-cta' class='split-cta container'>
+        <div class='cta-box seller-trigger'>
+            <span class='badge-soft'>For Sellers</span>
+            <h2>444,045 buyers are looking for properties</h2>
+            <p>Post your property for free, connect with quality buyers, and get access to our auto-generated listing video ads.</p>
+            <button class='btn-outline' style='pointer-events: none;'>Create Free Account</button>
+        </div>
+        <div class='cta-box'>
+            <span class='badge-soft'>For Buyers</span>
+            <h2>Get assistance finding your dream home</h2>
+            <p>Start your search with confidence. We match visit-ready buyers to the best listings available in the market.</p>
+            <button class='btn-primary trigger-modal' data-target='contactModal'>Find an Agent</button>
+        </div>
+    </section>
+
+    <section id='locations' class='top-locations container'>
+        <div class='section-heading'>
+            <h2>Top Locations</h2>
+            <p>Explore the most sought-after cities and provinces</p>
+        </div>
+        <div class='location-grid'>
+            <div class='location-card loc-trigger' data-city='Imus, Cavite' data-filter='cavite' style='background-image: url("https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80");'>
+                <div class='loc-content'>
+                    <h3>Imus, Cavite</h3>
+                    <p class='loc-info'>A rapidly growing residential haven perfect for growing families seeking suburban peace.</p>
+                </div>
+            </div>
+            <div class='location-card loc-trigger' data-city='Makati City' data-filter='makati' style='background-image: url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80");'>
+                <div class='loc-content'>
+                    <h3>Makati City</h3>
+                    <p class='loc-info'>The premier financial hub offering high-yield condo investments and luxury living.</p>
+                </div>
+            </div>
+            <div class='location-card loc-trigger' data-city='Santa Rosa, Laguna' data-filter='laguna' style='background-image: url("https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80");'>
+                <div class='loc-content'>
+                    <h3>Santa Rosa, Laguna</h3>
+                    <p class='loc-info'>The Lion City of the South, known for premium subdivisions and massive green spaces.</p>
+                </div>
+            </div>
+            <div class='location-card loc-trigger' data-city='BGC, Taguig' data-filter='bgc' style='background-image: url("https://images.unsplash.com/photo-1545459720-aac8509eb02c?auto=format&fit=crop&w=800&q=80");'>
+                <div class='loc-content'>
+                    <h3>BGC, Taguig</h3>
+                    <p class='loc-info'>Modern, highly walkable lifestyle district with the most exclusive high-rise projects.</p>
+                </div>
+            </div>
+            <div class='location-card loc-trigger' data-city='Cebu City' data-filter='cebu' style='background-image: url("https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80");'>
+                <div class='loc-content'>
+                    <h3>Cebu City</h3>
+                    <p class='loc-info'>The Queen City of the South blending dynamic business hubs with stunning coastal views.</p>
+                </div>
+            </div>
+            <div class='location-card loc-trigger' data-city='Davao City' data-filter='davao' style='background-image: url("https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80");'>
+                <div class='loc-content'>
+                    <h3>Davao City</h3>
+                    <p class='loc-info'>A highly secure and booming metropolis offering prime commercial and residential lots.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id='properties' class='featured-properties container'>
+        <div class='section-heading'>
+            <h2>Featured Properties</h2>
+            <p>Explore our wide range of premium listings</p>
+        </div>
+        <div class='property-grid' id='propertyGrid'></div>
+        <div class='pagination-container' id='paginationControls'></div>
+    </section>
+
+    <section class='agents-section container'>
+        <div class='section-heading'>
+            <h2>Meet Our Executive Team</h2>
+            <p>Certified experts ready to secure your wealth and property.</p>
+        </div>
+        <div class='agents-grid'>
+            <div class='agent-card'>
+                <div class='agent-img' style='background-image: url("angel-pic.jpg");'></div>
+                <div class='agent-info'>
+                    <h3>Angel May O. Ticsay</h3>
+                    <p class='agent-title'>Founder, Licensed Broker & Appraiser</p>
+                    <button class='btn-primary btn-bio' style='width: 100%; margin-bottom: 10px;' id='angelBioBtn'>View Profile</button>
+                    <button class='btn-outline trigger-modal' data-target='contactModal' style='width: 100%;'>Contact Angel</button>
+                </div>
+            </div>
+            <div class='agent-card'>
+                <div class='agent-img' style='background-image: url("https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=500&q=80");'></div>
+                <div class='agent-info'>
+                    <h3>Marcus Reyes</h3>
+                    <p class='agent-title'>Senior Property Planner</p>
+                    <button class='btn-primary btn-bio' style='width: 100%; margin-bottom: 10px;' id='marcusBioBtn'>View Profile</button>
+                    <button class='btn-outline trigger-modal' data-target='contactModal' style='width: 100%;'>Contact Marcus</button>
+                </div>
+            </div>
+            <div class='agent-card'>
+                <div class='agent-img' style='background-image: url("https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=500&q=80");'></div>
+                <div class='agent-info'>
+                    <h3>Elena Cruz</h3>
+                    <p class='agent-title'>Luxury Condo Specialist</p>
+                    <button class='btn-primary btn-bio' style='width: 100%; margin-bottom: 10px;' id='elenaBioBtn'>View Profile</button>
+                    <button class='btn-outline trigger-modal' data-target='contactModal' style='width: 100%;'>Contact Elena</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='testimonials-section container'>
+        <div class='section-heading'>
+            <h2>What Our Clients Say</h2>
+        </div>
+        <div class='testi-grid'>
+            <div class='testi-card'>
+                <i class='bx bxs-quote-alt-left'></i>
+                <p>The team at Seraphina Heights made my first home purchase so smooth. They explained all the financial terms clearly and helped me secure a great bank rate.</p>
+                <h4>- Andrea M.</h4>
+            </div>
+            <div class='testi-card'>
+                <i class='bx bxs-quote-alt-left'></i>
+                <p>I listed my BGC condo here and got a qualified buyer within two weeks! The interface is clean and the auto-generated ads really work.</p>
+                <h4>- Jonathan V.</h4>
+            </div>
+            <div class='testi-card'>
+                <i class='bx bxs-quote-alt-left'></i>
+                <p>Extremely professional platform. The verified listings gave me peace of mind when I was hunting for a commercial lot in Laguna.</p>
+                <h4>- Sarah L.</h4>
+            </div>
+        </div>
+    </section>
+
+    <footer class='main-footer'>
+        <div class='footer-grid container'>
+            <div class='footer-col'>
+                <h3>Seraphina Heights Realty</h3>
+                <p>Building Dreams, Inspiring Futures. We build trust, one property at a time.</p>
+                <div class='social-links'>
+                    <i class='bx bxl-facebook-circle'></i>
+                    <i class='bx bxl-instagram-alt'></i>
+                    <i class='bx bxl-twitter'></i>
+                    <i class='bx bxl-linkedin-square'></i>
+                </div>
+            </div>
+            <div class='footer-col'>
+                <h4>Quick Links</h4>
+                <a href='#hero' class='footer-link'>Home</a>
+                <a href='#properties' class='footer-link'>Properties</a>
+                <a href='#locations' class='footer-link'>Locations</a>
+            </div>
+            <div class='footer-col'>
+                <h4>Legal</h4>
+                <a href='#' class='legal-link' data-legal='privacy'>Privacy Policy</a>
+                <a href='#' class='legal-link' data-legal='terms'>Terms of Service</a>
+                <a href='#' class='legal-link' data-legal='cookie'>Cookie Policy</a>
+                <a href='#' class='legal-link' data-legal='license'>Brokerage License</a>
+            </div>
+            <div class='footer-col'>
+                <h4>Contact Us</h4>
+                <p><i class='bx bx-map'></i> Metro Manila, Philippines</p>
+                <p><i class='bx bx-phone'></i> 09954559135 / Viber</p>
+                <p><i class='bx bx-envelope'></i> seraphinaheightsrealty@gmail.com</p>
+            </div>
+        </div>
+        <div class='footer-bottom'>
+            <p>&copy; 2026 Seraphina Heights Realty. Designed and Developed by Kief It Up Dev.</p>
+        </div>
+    </footer>
+
+    <div class='modal-overlay' id='contactModal'>
+        <div class='modal-content'>
+            <button class='close-modal' data-close='contactModal'><i class='bx bx-x'></i></button>
+            <h2>Connect With Us</h2>
+            <p>Fill out the form below and one of our agents will get back to you shortly.</p>
+            <form class='modal-form' id='inquiryForm'>
+                <input type='text' placeholder='Your Full Name' required>
+                <input type='email' placeholder='Your Email Address' required>
+                <input type='tel' placeholder='Your Phone Number' required>
+                <textarea placeholder='How can we help you?' rows='4' required></textarea>
+                <button type='submit' class='btn-primary'>Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <div class='modal-overlay' id='infoModal'>
+        <div class='modal-content info-content' id='infoContentBody'>
+        </div>
+    </div>
+
+    <script src='script.js'></script>
+</body>
+</html>
