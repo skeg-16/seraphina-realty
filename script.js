@@ -39,6 +39,42 @@ scrollLinks.forEach(link => {
     });
 });
 
+const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            scrollObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.scroll-animate').forEach(el => {
+    scrollObserver.observe(el);
+});
+
+const counters = document.querySelectorAll('.counter-value');
+const speed = 200;
+const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            const updateCount = () => {
+                const target = +entry.target.getAttribute('data-target');
+                const count = +entry.target.innerText.replace(/\D/g, '');
+                const inc = target / speed;
+                if(count < target) {
+                    entry.target.innerText = Math.ceil(count + inc);
+                    setTimeout(updateCount, 10);
+                } else {
+                    entry.target.innerText = entry.target.getAttribute('data-final');
+                }
+            };
+            updateCount();
+            counterObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.5 });
+counters.forEach(counter => counterObserver.observe(counter));
+
 const realEstateImages = [
     'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
@@ -440,3 +476,12 @@ inquiryForm.addEventListener('submit', (e) => {
     contactModal.classList.remove('active');
     inquiryForm.reset();
 });
+
+const vipForm = document.getElementById('vipForm');
+if(vipForm) {
+    vipForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your interest. A Seraphina representative will contact you with VIP access details.');
+        vipForm.reset();
+    });
+}
