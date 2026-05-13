@@ -103,6 +103,8 @@ const locs = ['Laguna', 'Cavite', 'Batangas', 'Makati', 'BGC', 'Cebu', 'Davao'];
 const propTypes = ['lot', 'house', 'condo'];
 const typeLabels = { lot: 'For Sale Residential Lot', house: 'For Sale House & Lot', condo: 'For Sale Condominium' };
 const prefixes = ['Luxury', 'Modern', 'Spacious', 'Premium', 'Cozy', 'Elegant'];
+const latBase = { 'Laguna': 14.24, 'Cavite': 14.32, 'Batangas': 13.94, 'Makati': 14.55, 'BGC': 14.54, 'Cebu': 10.31, 'Davao': 7.19 };
+const lngBase = { 'Laguna': 121.12, 'Cavite': 120.93, 'Batangas': 121.16, 'Makati': 121.02, 'BGC': 121.05, 'Cebu': 123.89, 'Davao': 125.45 };
 
 for(let i=1; i<=54; i++) {
     let typeVal = propTypes[Math.floor(Math.random() * propTypes.length)];
@@ -114,6 +116,15 @@ for(let i=1; i<=54; i++) {
     let title = prefixes[Math.floor(Math.random() * prefixes.length)] + ' ' + typeLabels[typeVal];
     let bedsHtml = typeVal === 'lot' ? sqm + ' sqm.' : Math.floor(Math.random()*4+1) + ' Beds • ' + sqm + ' sqm.';
     let propImg = realEstateImages[i % realEstateImages.length];
+    
+    let galleryCount = Math.floor(Math.random() * 5) + 5;
+    let propGallery = [];
+    for(let j=0; j<galleryCount; j++) {
+        propGallery.push(realEstateImages[Math.floor(Math.random() * realEstateImages.length)]);
+    }
+
+    let lat = latBase[locVal] + (Math.random() - 0.5) * 0.05;
+    let lng = lngBase[locVal] + (Math.random() - 0.5) * 0.05;
     
     properties.push({
         id: i,
@@ -127,7 +138,9 @@ for(let i=1; i<=54; i++) {
         desc: title + ' located in ' + locVal + '.',
         updated: 'Updated ' + Math.floor(Math.random()*24+1) + ' hours ago',
         image: propImg,
-        photosCount: Math.floor(Math.random() * 25) + 3,
+        gallery: propGallery,
+        coords: [lat, lng],
+        photosCount: galleryCount,
         filterType: typeVal,
         filterLoc: locVal.toLowerCase(),
         timestamp: new Date().getTime() - Math.floor(Math.random()*10000000)
@@ -158,13 +171,11 @@ function renderProperties(data, page = 1) {
     currentFilteredProperties = data;
     
     if (data.length === 0) {
-        grid.innerHTML = `
-            <div class='no-results-box'>
+        grid.innerHTML = `<div class='no-results-box'>
                 <h3>No properties found matching your criteria.</h3>
                 <p>Try adjusting your search filters or keyword to find what you are looking for.</p>
                 <button class='btn-primary' onclick='resetFilters()'>View All Properties</button>
-            </div>
-        `;
+            </div>`;
         paginationControls.innerHTML = '';
         return;
     }
@@ -176,8 +187,7 @@ function renderProperties(data, page = 1) {
     paginatedItems.forEach(prop => {
         const card = document.createElement('div');
         card.className = 'prop-card';
-        card.innerHTML = `
-            <div class='prop-img-wrap'>
+        card.innerHTML = `<div class='prop-img-wrap'>
                 <img src='${prop.image}' alt='Property'>
                 <div class='img-count'><i class='bx bx-image-alt'></i> ${prop.photosCount}</div>
             </div>
@@ -192,44 +202,11 @@ function renderProperties(data, page = 1) {
                     <span class='update-time'>${prop.updated}</span>
                     <button class='contact-btn trigger-modal' data-target='contactModal'><i class='bx bx-message-square-dots'></i> Contact</button>
                 </div>
-            </div>
-        `;
+            </div>`;
 
         card.addEventListener('click', (e) => {
             if(e.target.closest('.contact-btn')) return;
-            openInfoModal('Property Details', prop.image, prop.desc, `
-                <div class='detail-grid'>
-                    <div class='detail-item'>
-                        <div class='detail-label'>Listing Type</div>
-                        <div class='detail-value'>For Sale</div>
-                    </div>
-                    <div class='detail-item'>
-                        <div class='detail-label'>Category</div>
-                        <div class='detail-value'>${prop.type.replace('For Sale ', '')}</div>
-                    </div>
-                    <div class='detail-item'>
-                        <div class='detail-label'>Total Area</div>
-                        <div class='detail-value'>${prop.sqm} sqm</div>
-                    </div>
-                    <div class='detail-item'>
-                        <div class='detail-label'>Turnover Condition</div>
-                        <div class='detail-value'>Fully Fitted</div>
-                    </div>
-                </div>
-
-                <p class='justified-text'>Discover premium living in this highly sought-after location in ${prop.location}. This property is meticulously designed to offer a perfect blend of luxury, comfort, and security. Surrounded by lush landscapes and modern conveniences, it stands as an exceptional choice for both families and strategic investors.</p>
-                
-                <div class='financing-box'>
-                    <div class='financing-title'><i class='bx bx-building-house'></i> Financing Options</div>
-                    <p><strong>Bank Financing:</strong> 20% Downpayment | Up to 20 years @ 7% interest</p>
-                    <p><strong>Pag-IBIG Fund:</strong> Applicable for verified members up to 30 years</p>
-                    <p><strong>In-House:</strong> 5 years @ 10% interest</p>
-                </div>
-
-                <p style='margin-bottom: 15px;'><strong>Community Features:</strong> 24/7 Security, Clubhouse, Playground, Parks</p>
-
-                <button class='btn-primary' style='margin-top:20px;' onclick='document.getElementById("infoModal").classList.remove("active"); document.getElementById("contactModal").classList.add("active");'>Inquire About This Property</button>
-            `);
+            openPropertyModal(prop);
         });
 
         grid.appendChild(card);
@@ -356,8 +333,7 @@ function openInfoModal(title, imgUrl, headline, bodyHtml, bgPos = 'center') {
         heroHtml = `<div class='info-hero active' style='background-image: url(${imgUrl}); background-position: ${bgPos};'></div>`;
     }
 
-    infoContentBody.innerHTML = `
-        <button class='close-modal' data-close='infoModal'><i class='bx bx-x'></i></button>
+    infoContentBody.innerHTML = `<button class='close-modal' data-close='infoModal'><i class='bx bx-x'></i></button>
         ${heroHtml}
         <div class='info-body'>
             <h2>${title}</h2>
@@ -365,10 +341,96 @@ function openInfoModal(title, imgUrl, headline, bodyHtml, bgPos = 'center') {
             <div class='content-wrapper'>
                 ${bodyHtml}
             </div>
-        </div>
-    `;
+        </div>`;
     infoModal.classList.add('active');
 }
+
+function openPropertyModal(prop) {
+    window.currentGallery = prop.gallery;
+    window.currentGalleryIndex = 0;
+
+    let galleryHtml = `<div class='gallery-wrapper'>
+        <div class='gallery-main'>
+            <button class='gallery-btn prev' onclick='changeImage(-1)'><i class='bx bx-chevron-left'></i></button>
+            <img id='main-gallery-img' src='${prop.gallery[0]}' alt='Property'>
+            <button class='gallery-btn next' onclick='changeImage(1)'><i class='bx bx-chevron-right'></i></button>
+        </div>
+        <div class='gallery-thumbnails'>`;
+
+    prop.gallery.forEach((img, idx) => {
+        let act = idx === 0 ? 'active' : '';
+        galleryHtml += `<img src='${img}' class='thumb ${act}' onclick='setGalleryImage(${idx})'>`;
+    });
+    galleryHtml += `</div></div>`;
+
+    let nearbyHtml = `<div class='nearby-section'>
+        <div class='nearby-header'>
+            <h3>What's Nearby</h3>
+            <span class='convenience-score'>Convenience Score: ${Math.floor(Math.random() * 30 + 70)}/100</span>
+        </div>
+        <div class='nearby-grid'>
+            <div class='nearby-card'><h4><i class='bx bx-restaurant'></i> Dining</h4><ul><li>Local Cafe - 0.5km</li><li>Fine Dining - 1.2km</li><li>Fast Food - 1.5km</li></ul></div>
+            <div class='nearby-card'><h4><i class='bx bx-book-open'></i> Education</h4><ul><li>Elementary School - 0.8km</li><li>National University - 2.1km</li></ul></div>
+            <div class='nearby-card'><h4><i class='bx bx-money'></i> Finance</h4><ul><li>BDO Branch - 1.0km</li><li>Security Bank - 1.3km</li></ul></div>
+            <div class='nearby-card'><h4><i class='bx bx-plus-medical'></i> Healthcare</h4><ul><li>General Hospital - 3.2km</li><li>Medical Clinic - 1.1km</li></ul></div>
+            <div class='nearby-card'><h4><i class='bx bx-shopping-bag'></i> Shopping</h4><ul><li>SM Supermall - 2.5km</li><li>Local Grocery - 0.6km</li></ul></div>
+            <div class='nearby-card'><h4><i class='bx bx-bus'></i> Transit</h4><ul><li>Main Terminal - 1.5km</li><li>Tricycle Station - 0.2km</li></ul></div>
+        </div>
+    </div>`;
+
+    infoContentBody.innerHTML = `<button class='close-modal' data-close='infoModal'><i class='bx bx-x'></i></button>
+        <div class='info-body'>
+            <h2>Property Details</h2>
+            <h3>${prop.desc}</h3>
+            ${galleryHtml}
+            <div class='detail-grid'>
+                <div class='detail-item'><div class='detail-label'>Listing Type</div><div class='detail-value'>For Sale</div></div>
+                <div class='detail-item'><div class='detail-label'>Category</div><div class='detail-value'>${prop.type.replace('For Sale ', '')}</div></div>
+                <div class='detail-item'><div class='detail-label'>Total Area</div><div class='detail-value'>${prop.sqm} sqm</div></div>
+                <div class='detail-item'><div class='detail-label'>Turnover Condition</div><div class='detail-value'>Fully Fitted</div></div>
+            </div>
+            <p class='justified-text'>Discover premium living in this highly sought-after location in ${prop.location}. This property is meticulously designed to offer a perfect blend of luxury, comfort, and security. Surrounded by lush landscapes and modern conveniences, it stands as an exceptional choice for both families and strategic investors.</p>
+            <div id='prop-map' style='height: 350px; width: 100%; border-radius: 12px; margin: 25px 0; z-index: 1; border: 1px solid var(--border-color);'></div>
+            ${nearbyHtml}
+            <div class='financing-box'>
+                <div class='financing-title'><i class='bx bx-building-house'></i> Financing Options</div>
+                <p><strong>Bank Financing:</strong> 20% Downpayment | Up to 20 years @ 7% interest</p>
+                <p><strong>Pag-IBIG Fund:</strong> Applicable for verified members up to 30 years</p>
+            </div>
+            <button class='btn-primary' style='margin-top:20px;' onclick='document.getElementById("infoModal").classList.remove("active"); document.getElementById("contactModal").classList.add("active");'>Inquire About This Property</button>
+        </div>`;
+
+    infoModal.classList.add('active');
+
+    setTimeout(() => {
+        if(window.propMap) {
+            window.propMap.remove();
+        }
+        window.propMap = L.map('prop-map').setView(prop.coords, 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(window.propMap);
+        L.marker(prop.coords).addTo(window.propMap).bindPopup(prop.location).openPopup();
+        window.propMap.invalidateSize();
+    }, 300);
+}
+
+window.changeImage = function(dir) {
+    window.currentGalleryIndex += dir;
+    if(window.currentGalleryIndex < 0) window.currentGalleryIndex = window.currentGallery.length - 1;
+    if(window.currentGalleryIndex >= window.currentGallery.length) window.currentGalleryIndex = 0;
+    window.setGalleryImage(window.currentGalleryIndex);
+};
+
+window.setGalleryImage = function(idx) {
+    window.currentGalleryIndex = idx;
+    document.getElementById('main-gallery-img').src = window.currentGallery[idx];
+    document.querySelectorAll('.gallery-thumbnails .thumb').forEach((th, i) => {
+        if(i === idx) {
+            th.classList.add('active');
+        } else {
+            th.classList.remove('active');
+        }
+    });
+};
 
 const angelBioBtn = document.getElementById('angelBioBtn');
 if (angelBioBtn) {
@@ -377,12 +439,10 @@ if (angelBioBtn) {
             'Founder Profile', 
             null, 
             'Angel May O. Ticsay', 
-            `
-            <p class='justified-text'>Angel May Ticsay is a founder and proud owner of Seraphina Heights Realty, a company built with the vision of creating elegant, secure, and high-quality communities where individuals and families can truly feel at home. My passion for real estate began with the belief that properties are more than investments they are spaces where dreams, memories, and futures are built.</p>
+            `<p class='justified-text'>Angel May Ticsay is a founder and proud owner of Seraphina Heights Realty, a company built with the vision of creating elegant, secure, and high-quality communities where individuals and families can truly feel at home. My passion for real estate began with the belief that properties are more than investments they are spaces where dreams, memories, and futures are built.</p>
             <p class='justified-text'>With dedication, integrity, and a strong commitment to excellence, I established Seraphina Heights Realty to provide reliable and professional real estate services that prioritize customer satisfaction and long-term value. I strive to lead the company with innovation and purpose, ensuring that every property we offer reflects comfort, sophistication, and modern living.</p>
             <p class='justified-text'>My experience in real estate has allowed me to understand the different needs of homeowners, investors, and business clients. Through this, I continue to guide Seraphina Heights Realty in delivering exceptional service, strategic property solutions, and communities designed to inspire growth and peaceful living.</p>
-            <p class='justified-text'>At Seraphina Heights Realty, my mission is to help people find not only beautiful properties but also opportunities that will secure their future and improve their quality of life. I believe that with trust, dedication, and visionary leadership, we can create developments that leave a lasting impact for generations to come.</p>
-            `,
+            <p class='justified-text'>At Seraphina Heights Realty, my mission is to help people find not only beautiful properties but also opportunities that will secure their future and improve their quality of life. I believe that with trust, dedication, and visionary leadership, we can create developments that leave a lasting impact for generations to come.</p>`,
             'top center'
         );
     });
@@ -416,16 +476,14 @@ if (elenaBioBtn) {
 
 document.querySelectorAll('.seller-trigger').forEach(card => {
     card.addEventListener('click', () => {
-        openInfoModal('Seller Program', null, 'Post your property for free', `
-            <p class='justified-text'>Join over 400,000+ buyers looking for properties exactly like yours. Our platform auto-generates your listings into professional video ads to speed up your sales.</p>
+        openInfoModal('Seller Program', null, 'Post your property for free', `<p class='justified-text'>Join over 400,000+ buyers looking for properties exactly like yours. Our platform auto-generates your listings into professional video ads to speed up your sales.</p>
             <p><strong>Benefits:</strong></p>
             <ul style='margin-left: 20px; margin-bottom: 15px;'>
                 <li>Zero upfront posting fees</li>
                 <li>Access to our exclusive CRM</li>
                 <li>Professional online business card</li>
             </ul>
-            <button class='btn-primary' style='margin-top:15px;' onclick='document.getElementById("infoModal").classList.remove("active"); document.getElementById("contactModal").classList.add("active");'>Get Started Now</button>
-        `);
+            <button class='btn-primary' style='margin-top:15px;' onclick='document.getElementById("infoModal").classList.remove("active"); document.getElementById("contactModal").classList.add("active");'>Get Started Now</button>`);
     });
 });
 
@@ -434,11 +492,9 @@ document.querySelectorAll('.loc-trigger').forEach(card => {
         const city = card.getAttribute('data-city');
         const desc = card.getAttribute('data-desc');
         const filterVal = card.getAttribute('data-filter');
-        openInfoModal('Location Spotlight', null, city, `
-            <p class='justified-text'>${desc}</p>
+        openInfoModal('Location Spotlight', null, city, `<p class='justified-text'>${desc}</p>
             <p class='justified-text'>Our market insights indicate a high return on investment for properties situated in this area. It boasts an excellent combination of accessibility, secure neighborhoods, and rapid commercial growth.</p>
-            <button class='btn-primary' style='margin-top:15px;' onclick='triggerLocationSearch("${filterVal}")'>View Properties Here</button>
-        `);
+            <button class='btn-primary' style='margin-top:15px;' onclick='triggerLocationSearch("${filterVal}")'>View Properties Here</button>`);
     });
 });
 
@@ -484,4 +540,4 @@ if(vipForm) {
         alert('Thank you for your interest. A Seraphina representative will contact you with VIP access details.');
         vipForm.reset();
     });
-}
+}   
