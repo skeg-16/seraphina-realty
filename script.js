@@ -454,8 +454,8 @@ if (marcusBioBtn) {
         openInfoModal(
             'Executive Team', 
             null, 
-            'Marcus Reyes', 
-            `<p class='justified-text'>Marcus Reyes brings over 15 years of elite property planning experience to Seraphina Heights. Known for his sharp market insights and unparalleled negotiation skills, Marcus ensures that every client secures the best possible value for their investments. He specializes in high-end commercial estates and sprawling residential lots.</p>`,
+            'Julian Oliva', 
+            `<p class='justified-text'>Julian Oliva brings over 15 years of elite property planning experience to Seraphina Heights. Known for his sharp market insights and unparalleled negotiation skills, Julian ensures that every client secures the best possible value for their investments. He specializes in high-end commercial estates and sprawling residential lots.</p>`,
             'top center'
         );
     });
@@ -467,8 +467,8 @@ if (elenaBioBtn) {
         openInfoModal(
             'Executive Team', 
             null, 
-            'Elena Cruz', 
-            `<p class='justified-text'>As our premier Luxury Condo Specialist, Elena Cruz is the bridge between modern professionals and their dream city-center lifestyles. Her impeccable taste in modern architecture and deep understanding of metropolitan real estate makes her the perfect guide for navigating high-rise investments.</p>`,
+            'Rolanda Dulay', 
+            `<p class='justified-text'>As our premier Luxury Condo Specialist, Rolanda Dulay is the bridge between modern professionals and their dream city-center lifestyles. Her impeccable taste in modern architecture and deep understanding of metropolitan real estate makes her the perfect guide for navigating high-rise investments.</p>`,
             'top center'
         );
     });
