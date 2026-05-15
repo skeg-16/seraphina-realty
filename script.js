@@ -448,9 +448,9 @@ if (angelBioBtn) {
     });
 }
 
-const marcusBioBtn = document.getElementById('marcusBioBtn');
-if (marcusBioBtn) {
-    marcusBioBtn.addEventListener('click', () => {
+const julianBioBtn = document.getElementById('julianBioBtn');
+if (julianBioBtn) {
+    julianBioBtn.addEventListener('click', () => {
         openInfoModal(
             'Executive Team', 
             null, 
@@ -461,9 +461,9 @@ if (marcusBioBtn) {
     });
 }
 
-const elenaBioBtn = document.getElementById('elenaBioBtn');
-if (elenaBioBtn) {
-    elenaBioBtn.addEventListener('click', () => {
+const rolandaBioBtn = document.getElementById('rolandaBioBtn');
+if (rolandaBioBtn) {
+    rolandaBioBtn.addEventListener('click', () => {
         openInfoModal(
             'Executive Team', 
             null, 
